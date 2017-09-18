@@ -2,8 +2,8 @@ package main;
 
 // For backward compatibility with Java 1.4, we use explicit constant
 // declarations.  Java 1.5 would now have an enum construct.
-interface TokenType {
 
+interface TokenType {
     public static final int QUOTE = 0;			// '
     public static final int LPAREN = 1;			// (
     public static final int RPAREN = 2;                 // )

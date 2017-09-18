@@ -2,7 +2,6 @@ package main;
 
 // Scanner.java -- the implementation of class Scanner
 import java.io.*;
-import java.util.Arrays;
 
 class Scanner {
 

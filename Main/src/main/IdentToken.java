@@ -1,15 +1,14 @@
 package main;
 
 class IdentToken extends Token {
+  private String name;
 
-    private String name;
+  public IdentToken(String s) {
+    super(TokenType.IDENT);
+    name = s;
+  }
 
-    public IdentToken(String s) {
-        super(TokenType.IDENT);
-        name = s;
-    }
-
-    String getName() {
-        return name;
-    }
+  String getName() {
+    return name;
+  }
 }

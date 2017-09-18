@@ -1,25 +1,15 @@
 package main;
 
 import java.io.*;
-
 class IntLit extends Node {
+  private int intVal;
 
-    private int intVal;
+  public IntLit(int i) { intVal = i; }
 
-    public IntLit(int i) {
-        intVal = i;
-    }
+  public void print(int n) {
+    for (int i = 0; i < n; i++)
+      System.out.print(" ");
 
-    @Override
-    public boolean isNumber() {
-        return true;
-    }
-
-    public void print(int n) {
-        for (int i = 0; i < n; i++) {
-            System.out.print(" ");
-        }
-
-        System.out.println(intVal);
-    }
+    System.out.println(intVal);
+  }
 }
