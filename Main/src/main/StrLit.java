@@ -5,6 +5,10 @@ class StrLit extends Node {
   private String strVal;
 
   public StrLit(String s) { strVal = s; }
+  
+  public boolean isString() {
+      return true;
+  }
 
   public void print(int n) {
     for (int i = 0; i < n; i++)

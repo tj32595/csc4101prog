@@ -21,6 +21,10 @@ class Cons extends Node {
 	cdr = d;
 	parseList();
     }
+    
+    public boolean isPair() {
+        return true;
+    }
 
     void print(int n) {
 	form.print(this, n, false);
