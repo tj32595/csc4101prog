@@ -1,6 +1,8 @@
 package main;
 
 // Parser.java -- the implementation of class Parser
+import java.io.IOException;
+
 //
 // Defines
 //
@@ -34,21 +36,40 @@ package main;
 // the parser returns a NULL tree.  In case of a parse error, the
 // parser discards the offending token (which probably was a DOT
 // or an RPAREN) and attempts to continue parsing with the next token.
-
 class Parser {
-  private Scanner scanner;
 
-  public Parser(Scanner s) { scanner = s; }
-  
-  public Node parseExp() {
-    // TODO: write code for parsing an exp
-    return null;
-  }
-  
-  protected Node parseRest() {
-    // TODO: write code for parsing rest
-    return null;
-  }
-  
-  // TODO: Add any additional methods you might need.
-};
+    private Scanner scanner;
+
+    public Parser(Scanner s) {
+        scanner = s;
+    }
+
+    //   exp  ->  ( rest
+    //         |  #f
+    //         |  #t
+    //         |  ' exp
+    //         |  integer_constant
+    //         |  string_constant
+    //         |  identifier
+    //    rest -> )
+    //         |  exp+ [. exp] )
+    public Node parseExp() throws IOException {
+        // TODO: write code for parsing an exp
+        Token tkn = scanner.getNextToken();
+
+        if (tkn.getType() == TokenType.LPAREN) {
+            System.out.print(tkn);
+            parseRest();
+        }
+
+        return null;
+    }
+
+    protected Node parseRest() {
+        // TODO: write code for parsing rest
+        Token tkn = scanner.getNextToken();
+        return null;
+    }
+
+    // TODO: Add any additional methods you might need.
+}
