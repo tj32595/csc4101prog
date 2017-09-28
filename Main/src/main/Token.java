@@ -1,17 +1,26 @@
 package main;
 
 class Token implements TokenType {
-  private int tt;
 
-  Token(int t) {
-    tt = t;
-  }
+    private int tt;
 
-  int getType() {
-    return tt;
-  }
+    Token(int t) {
+        tt = t;
+    }
 
-  int getIntVal() { return 0; }
-  String getStrVal() { return ""; }
-  String getName() { return ""; }
+    int getType() {
+        return tt;
+    }
+
+    int getIntVal() {
+        return 0;
+    }
+
+    String getStrVal() {
+        return "";
+    }
+
+    String getName() {
+        return "";
+    }
 }

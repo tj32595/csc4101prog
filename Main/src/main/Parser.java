@@ -1,6 +1,8 @@
 package main;
 
 // Parser.java -- the implementation of class Parser
+import java.io.IOException;
+
 //
 // Defines
 //
@@ -34,21 +36,75 @@ package main;
 // the parser returns a NULL tree.  In case of a parse error, the
 // parser discards the offending token (which probably was a DOT
 // or an RPAREN) and attempts to continue parsing with the next token.
-
 class Parser {
-  private Scanner scanner;
 
-  public Parser(Scanner s) { scanner = s; }
-  
-  public Node parseExp() {
-    // TODO: write code for parsing an exp
-    return null;
-  }
-  
-  protected Node parseRest() {
-    // TODO: write code for parsing rest
-    return null;
-  }
-  
-  // TODO: Add any additional methods you might need.
-};
+    private Scanner scanner;
+    private Nil nil = new Nil();
+
+    public Parser(Scanner s) {
+        scanner = s;
+    }
+
+    public Node parseExp() throws IOException {
+        Token tkn = scanner.getNextToken();
+        int tknType = tkn.getType();
+        switch (tknType) {
+            case Token.LPAREN:
+                return new Cons(parseExp(), parseRest());
+            case Token.FALSE:
+                return new BooleanLit(false);
+            case Token.TRUE:
+                return new BooleanLit(true);
+            case Token.QUOTE:
+                break;
+            case Token.INT:
+                return new IntLit(tkn.getIntVal());
+            case Token.STRING:
+                return new StrLit(tkn.getStrVal());
+            case Token.IDENT:
+                return new Ident(tkn.getStrVal());
+            default:
+                return nil;
+        }
+        return nil;
+    }
+
+    public Node parseExp(Token tkn) throws IOException {
+        int tknType = tkn.getType();
+        switch (tknType) {
+            case Token.LPAREN:
+                return parseRest();
+            case Token.FALSE:
+                return new BooleanLit(false);
+            case Token.TRUE:
+                return new BooleanLit(true);
+            case Token.QUOTE:
+                break;
+            case Token.INT:
+                return new IntLit(tkn.getIntVal());
+            case Token.STRING:
+                return new StrLit(tkn.getStrVal());
+            case Token.IDENT:
+                return new Ident(tkn.getStrVal());
+            default:
+                return nil;
+        }
+        return nil;
+    }
+
+    protected Node parseRest() throws IOException {
+        Token tkn = scanner.getNextToken();
+        int tknType = tkn.getType();
+        switch (tknType) {
+            case Token.RPAREN:
+                return nil;
+            default:
+                Token nextTkn = scanner.getNextToken();
+                if (nextTkn.getType() == Token.RPAREN) {
+                    return new Cons(parseExp(tkn), nil);
+                } else {
+                    return new Cons(parseExp(tkn), parseRest());
+                }
+        }
+    }
+}

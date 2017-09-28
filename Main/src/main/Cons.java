@@ -1,10 +1,11 @@
 package main;
 
 class Cons extends Node {
+
     private Node car;
     private Node cdr;
     private Special form;
-  
+
     // parseList() `parses' special forms, constructs an appropriate
     // object of a subclass of Special, and stores a pointer to that
     // object in variable form.  It would be possible to fully parse
@@ -13,25 +14,52 @@ class Cons extends Node {
     // parseList only look at the car for selecting the appropriate
     // object from the Special hierarchy and to leave the rest of
     // parsing up to the interpreter.
-    void parseList() { }
+    void parseList() {
+    }
     // TODO: Add any helper functions for parseList as appropriate.
 
     public Cons(Node a, Node d) {
-	car = a;
-	cdr = d;
-	parseList();
+        car = a;
+        cdr = d;
+        parseList();
     }
-    
+
+    @Override
     public boolean isPair() {
         return true;
     }
 
+    @Override
     void print(int n) {
-	form.print(this, n, false);
+        form.print(this, n, false);
     }
 
+    @Override
     void print(int n, boolean p) {
-	form.print(this, n, p);
+        form.print(this, n, p);
+    }
+    
+    // TODO implement
+    @Override
+    public Node getCar() {
+        return car;
+    }
+
+    @Override
+    public Node getCdr() {
+        return cdr;
+    }
+
+    // After setCar, a Cons cell needs to be `parsed' again using parseList.
+    @Override
+    public void setCar(Node a) {
+        car = a;
+        parseList();
+    }
+
+    @Override
+    public void setCdr(Node d) {
+        cdr = d;
     }
 
 }

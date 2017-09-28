@@ -139,7 +139,7 @@ class Scanner {
             }
             // put the character after the identifier back into the input
             in.unread(ch);
-            return new IdentToken(new String(buf, "US-ASCII").trim());
+            return new IdentToken(new String(buf, "US-ASCII").trim().toLowerCase());
         } // Illegal character
         else {
             System.err.println("Illegal input character '" + (char) ch + '\'');
