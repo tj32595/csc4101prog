@@ -3,6 +3,10 @@ package main;
 import java.io.*;
 
 class Lambda extends Special {
+    
+    public Lambda() {
+        
+    }
 
     // TODO: Add any fields needed.
     // TODO: Add an appropriate constructor.

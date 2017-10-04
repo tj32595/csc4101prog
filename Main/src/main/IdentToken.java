@@ -9,6 +9,7 @@ class IdentToken extends Token {
         name = s;
     }
 
+    @Override
     String getName() {
         return name;
     }

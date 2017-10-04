@@ -38,8 +38,10 @@ import java.io.IOException;
 // or an RPAREN) and attempts to continue parsing with the next token.
 class Parser {
 
-    private Scanner scanner;
-    private Nil nil = new Nil();
+    private final Scanner scanner;
+    private final Nil nil = new Nil();
+    private final BooleanLit boolTrue = new BooleanLit(true);
+    private final BooleanLit boolFalse = new BooleanLit(false);
 
     public Parser(Scanner s) {
         scanner = s;
@@ -50,13 +52,13 @@ class Parser {
         int tknType = tkn.getType();
         switch (tknType) {
             case Token.LPAREN:
-                return new Cons(parseExp(), parseRest());
+                return parseRest();
             case Token.FALSE:
-                return new BooleanLit(false);
+                return boolFalse;
             case Token.TRUE:
-                return new BooleanLit(true);
+                return boolTrue;
             case Token.QUOTE:
-                break;
+                return new Cons(new Ident("'"), parseExp());
             case Token.INT:
                 return new IntLit(tkn.getIntVal());
             case Token.STRING:
@@ -66,7 +68,6 @@ class Parser {
             default:
                 return nil;
         }
-        return nil;
     }
 
     public Node parseExp(Token tkn) throws IOException {
@@ -75,11 +76,11 @@ class Parser {
             case Token.LPAREN:
                 return parseRest();
             case Token.FALSE:
-                return new BooleanLit(false);
+                return boolFalse;
             case Token.TRUE:
-                return new BooleanLit(true);
+                return boolTrue;
             case Token.QUOTE:
-                break;
+                return parseExp();
             case Token.INT:
                 return new IntLit(tkn.getIntVal());
             case Token.STRING:
@@ -89,8 +90,7 @@ class Parser {
             default:
                 return nil;
         }
-        return nil;
-    }
+    } 
 
     protected Node parseRest() throws IOException {
         Token tkn = scanner.getNextToken();

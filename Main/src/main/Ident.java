@@ -10,10 +10,12 @@ class Ident extends Node {
         name = n;
     }
 
+    @Override
     public boolean isSymbol() {
         return true;
     }
 
+    @Override
     public void print(int n) {
         for (int i = 0; i < n; i++) {
             System.out.print(" ");

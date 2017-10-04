@@ -7,12 +7,14 @@ class Scanner {
 
     private PushbackInputStream in;
     private byte[] buf = new byte[1000];
+    private int pos = 1;
 
     public Scanner(InputStream i) {
         in = new PushbackInputStream(i);
     }
 
     public Token getNextToken() throws IOException {
+        buf = new byte[1000];
         int bite = -1;
 
         // It would be more efficient if we'd maintain our own input buffer
@@ -23,6 +25,7 @@ class Scanner {
         } catch (IOException e) {
             System.err.println("We fail: " + e.getMessage());
         }
+        in.unread(bite);
 
         // skip whitespace
         nonWhiteSpace:
@@ -59,6 +62,7 @@ class Scanner {
                         break;
                 }
             }
+            in.unread(bite);
         }
 
         if (bite == -1) {
@@ -105,41 +109,48 @@ class Scanner {
         else if (ch == '"') {
             bite = in.read();
             for (int i = 0; (char) bite != '"'; i++) {
+                pos++;
                 buf[i] = (byte) bite;
                 bite = in.read();
             }
-            return new StrToken(new String(buf, "US-ASCII").trim());
+            return new StrToken(new String(buf).substring(0, pos));
         } // Integer constants
         else if (ch >= '0' && ch <= '9') {
+            
             buf[0] = (byte) ch;
             bite = in.read();
             ch = (char) bite;
             for (int i = 1; ch >= '0' && ch <= '9'; i++) {
+                pos++;
                 buf[i] = (byte) bite;
                 bite = in.read();
                 ch = (char) bite;
             }
             // put the character after the integer back into the input
             in.unread(ch);
-            return new IntToken(Integer.parseInt((new String(buf, "US-ASCII")).trim()));
+            return new IntToken(Integer.parseInt((new String(buf)).substring(0, pos)));
         } // Identifiers
-        else if ((ch >= 'A' && ch <= 'Z') || ch == '!' || ch >= '$' || ch <= '&'
-                || ch == '*' || ch == '+' || ch >= '-' || ch <= '/' || ch == ':'
-                || ch >= '<' || ch <= '@' || ch == '^' || ch == '_' || ch == '~') {
+        else if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch == '!' || (ch >= '$' && ch <= '&')
+                || ch == '*' || ch == '+' || (ch >= '-' && ch <= '/') || ch == ':'
+                || (ch >= '<' && ch <= '@') || ch == '^' || ch == '_' || ch == '~') {
             // scan an identifier into the buffer
             buf[0] = (byte) ch;
             bite = in.read();
             ch = (char) bite;
-            for (int i = 1; ch >= '0' && ch <= '9' || (ch >= 'A' && ch <= 'Z') || ch == '!' || ch >= '$' || ch <= '&'
-                    || ch == '*' || ch == '+' || ch >= '-' || ch <= '/' || ch == ':'
-                    || ch >= '<' || ch <= '@' || ch == '^' || ch == '_' || ch == '~'; i++) {
+            for (int i = 1; (ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || ch == '!' || (ch >= '$' && ch <= '&')
+                    || (ch >= 'a' && ch <= 'z') || ch == '*' || ch == '+' || (ch >= '-' && ch <= '/') || ch == ':'
+                    || (ch >= '<' && ch <= '@') || ch == '^' || ch == '_' || ch == '~'; i++) {
+                pos++;
+                if ((ch >= 'A' || ch <= 'Z')) {
+                    buf[i] = (byte) (bite + 32);
+                }
                 buf[i] = (byte) bite;
                 bite = in.read();
                 ch = (char) bite;
             }
             // put the character after the identifier back into the input
             in.unread(ch);
-            return new IdentToken(new String(buf, "US-ASCII").trim().toLowerCase());
+            return new IdentToken(new String(buf).substring(0, pos));
         } // Illegal character
         else {
             System.err.println("Illegal input character '" + (char) ch + '\'');
