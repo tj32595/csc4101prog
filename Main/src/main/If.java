@@ -8,5 +8,6 @@ class If extends Special {
     // TODO: Add an appropriate constructor.
     @Override
     void print(Node t, int n, boolean p) {
+        
     }
 }

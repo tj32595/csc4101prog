@@ -15,7 +15,46 @@ class Cons extends Node {
     // object from the Special hierarchy and to leave the rest of
     // parsing up to the interpreter.
     void parseList() {
-        
+        if (car.isSymbol()) {
+            Ident id = (Ident) car;
+            String idName = id.getName();
+            
+            switch(idName) {
+                case "quote":
+                    form = new Quote();
+                    break;
+                case "'":
+                    form = new Quote();
+                    break;
+                case "lambda":
+                    form = new Lambda();
+                    break;
+                case "begin":
+                    form = new Begin();
+                    break;
+                case "if":
+                    form = new If();
+                    break;
+                case "let":
+                    form = new Let();
+                    break;
+                case "cond":
+                    form = new Cond();
+                    break;
+                case "define":
+                    form = new Define();
+                    break;
+                case "set!":
+                    form = new Set();
+                    break;
+                default:
+                    form = new Regular();
+                    break;
+            }
+        }
+        else {
+            form = new Regular();
+        }
     }
     // TODO: Add any helper functions for parseList as appropriate.
 
