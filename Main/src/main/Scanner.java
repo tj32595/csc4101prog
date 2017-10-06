@@ -128,7 +128,7 @@ class Scanner {
             }
             // put the character after the integer back into the input
             in.unread(ch);
-            return new IntToken(Integer.parseInt((new String(buf)).substring(0, pos)));
+            return new IntToken(Integer.parseInt((new String(buf)).trim()));
         } // Identifiers
         else if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch == '!' || (ch >= '$' && ch <= '&')
                 || ch == '*' || ch == '+' || (ch >= '-' && ch <= '/') || ch == ':'
