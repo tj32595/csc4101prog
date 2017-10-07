@@ -1,7 +1,5 @@
 package main;
 
-import java.io.*;
-
 class Ident extends Node {
 
     private String name;
@@ -21,7 +19,7 @@ class Ident extends Node {
             System.out.print(" ");
         }
 
-        System.out.println(name);
+        System.out.print(name);
     }
     
     public String getName() {

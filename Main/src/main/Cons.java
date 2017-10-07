@@ -18,10 +18,10 @@ class Cons extends Node {
         if (car.isSymbol()) {
             Ident id = (Ident) car;
             String idName = id.getName();
-            
-            switch(idName) {
+
+            switch (idName) {
                 case "quote":
-                    form = new Quote();
+                    form = new Regular();
                     break;
                 case "'":
                     form = new Quote();
@@ -51,8 +51,7 @@ class Cons extends Node {
                     form = new Regular();
                     break;
             }
-        }
-        else {
+        } else {
             form = new Regular();
         }
     }
@@ -71,14 +70,29 @@ class Cons extends Node {
 
     @Override
     void print(int n) {
-        form.print(this, n, false);
+        print(n, false);
     }
 
     @Override
     void print(int n, boolean p) {
-        form.print(this, n, p);
+        if (car.getName().equals("quote")) {
+            System.out.print("'");
+            form.print(this.cdr, n, false);
+            System.out.print("\b");
+        } else {
+            if (form.isQuote()) {
+                System.out.print("'");
+            }
+            for (int i = 0; i < n; i++) {
+                System.out.print(" ");
+            }
+            if (!p) {
+                System.out.print("(");
+            }
+            form.print(this, n, true);
+        }
     }
-    
+
     // TODO implement
     @Override
     public Node getCar() {

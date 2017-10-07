@@ -63,10 +63,8 @@ class Parser {
                 return new IntLit(tkn.getIntVal());
             case Token.STRING:
                 return new StrLit(tkn.getStrVal());
-            case Token.IDENT:
-                return new Ident(tkn.getStrVal());
             default:
-                return nil;
+                return new Ident(tkn.getName());
         }
     }
 
@@ -80,31 +78,31 @@ class Parser {
             case Token.TRUE:
                 return boolTrue;
             case Token.QUOTE:
-                return parseExp();
+                return new Cons(new Ident("'"), parseExp());
             case Token.INT:
                 return new IntLit(tkn.getIntVal());
             case Token.STRING:
                 return new StrLit(tkn.getStrVal());
-            case Token.IDENT:
-                return new Ident(tkn.getStrVal());
             default:
-                return nil;
+                return new Ident(tkn.getName());
         }
-    } 
+    }
 
     protected Node parseRest() throws IOException {
         Token tkn = scanner.getNextToken();
         int tknType = tkn.getType();
-        switch (tknType) {
-            case Token.RPAREN:
-                return nil;
-            default:
-                Token nextTkn = scanner.getNextToken();
-                if (nextTkn.getType() == Token.RPAREN) {
-                    return new Cons(parseExp(tkn), nil);
-                } else {
-                    return new Cons(parseExp(tkn), parseRest());
-                }
+
+        if (tknType == Token.RPAREN) {
+            return nil;
+        } else {
+            Node exp = parseExp(tkn);
+            Token nextTkn = scanner.getNextToken();
+            Node nextExp = parseExp(nextTkn);
+            if (nextTkn.getType() == Token.RPAREN) {
+                return new Cons(exp, nil);
+            } else {
+                return new Cons(exp, new Cons(nextExp, parseRest()));
+            }
         }
     }
 }

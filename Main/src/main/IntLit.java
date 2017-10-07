@@ -19,6 +19,6 @@ class IntLit extends Node {
             System.out.print(" ");
         }
 
-        System.out.println(intVal);
+        System.out.print(intVal);
     }
 }

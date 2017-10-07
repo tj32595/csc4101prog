@@ -1,13 +1,10 @@
 package main;
 
-import java.io.*;
-
 class Node {
     // The argument of print(int) is the number of characters to indent.
     // Every subclass of Node must implement print(int).
 
-    void print(int n) {
-    }
+    void print(int n) {}
 
     // The first argument of print(int, boolean) is the number of characters
     // to indent.  It is interpreted the same as for print(int).
@@ -24,9 +21,7 @@ class Node {
     // encode that in the sign bit of n.  If you need additional parameters,
     // make sure that you define the method print in all the appropriate
     // subclasses of Node as well.
-    void print(int n, boolean p) {
-        print(n);
-    }
+    void print(int n, boolean p) {}
 
     // For parsing Cons nodes, for printing trees, and later for
     // evaluating them, we need some helper functions that test
@@ -71,5 +66,9 @@ class Node {
 
     public void setCdr(Node d) {
         System.err.println("Cannot use setCdr() on a Node object.");
+    }
+    
+    public String getName() {
+        return "";
     }
 }

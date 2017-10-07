@@ -1,7 +1,5 @@
 package main;
 
-import java.io.*;
-
 class StrLit extends Node {
 
     private String strVal;
@@ -10,15 +8,22 @@ class StrLit extends Node {
         strVal = s;
     }
 
+    @Override
     public boolean isString() {
         return true;
     }
 
+    @Override
     public void print(int n) {
         for (int i = 0; i < n; i++) {
             System.out.print(" ");
         }
 
-        System.out.println("\"" + strVal + "\"");
+        System.out.print("\"" + strVal + "\"");
+    }
+    
+    @Override
+    public String getName() {
+        return strVal;
     }
 }
