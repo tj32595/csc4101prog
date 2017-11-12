@@ -1,8 +1,6 @@
 package main;
 
 // Special.h -- the parse tree node data structure for special forms
-import java.io.*;
-
 // There are several different approaches for how to implement the Special
 // hierarchy.  We'll discuss some of them in class.  The easiest solution
 // is to not add any fields and to use empty constructors.

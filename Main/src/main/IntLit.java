@@ -9,6 +9,10 @@ class IntLit extends Node {
     public IntLit(int i) {
         intVal = i;
     }
+    
+    public int getValue() {
+        return intVal;
+    }
 
     public boolean isNumber() {
         return true;

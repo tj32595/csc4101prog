@@ -29,6 +29,10 @@ class Node {
     public boolean isBoolean() {
         return false;
     }  // BooleanLit
+    
+    public boolean isProcedure() {
+        return false;
+    } // Closure
 
     public boolean isNumber() {
         return false;
@@ -70,5 +74,18 @@ class Node {
     
     public String getName() {
         return "";
+    }
+    
+    public int getValue() {
+        return 0;
+    }
+    
+    public Node apply(Node args) {
+        System.err.println("Cannot use apply() on a Node object.");
+        return null;
+    }
+
+    public Node eval() {
+        return null;
     }
 }
