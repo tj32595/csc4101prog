@@ -116,4 +116,14 @@ class Cons extends Node {
         cdr = d;
     }
 
+    @Override
+    public Node eval(Environment env) {
+        Node function = form.eval(this, env);
+        Node cdr = this.getCdr();
+        if (cdr.isNull()) {
+            return function;
+        }
+        return cdr.eval(env);
+    }
+
 }

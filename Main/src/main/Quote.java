@@ -1,15 +1,16 @@
 package main;
 
-import java.io.*;
-
 class Quote extends Special {
 
     public Quote() {
 
     }
+    
+    @Override
+    public Node eval(Node function, Environment env) {
+        return function.getCar().getCdr();
+    }
 
-    // TODO: Add any fields needed.
-    // TODO: Add an appropriate constructor.
     @Override
     void print(Node root, int n, boolean p) {
         for (int i = 0; i < n; i++) {

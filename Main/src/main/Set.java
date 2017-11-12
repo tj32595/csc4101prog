@@ -5,6 +5,14 @@ class Set extends Special {
     public Set() {
 
     }
+    
+    @Override
+    public Node eval(Node function, Environment env) {
+        Node arg1 = function.getCdr().getCar();
+        Node arg2 = function.getCdr().getCdr().getCar();
+        env.assign(arg1, arg2.eval(env));
+        return function;
+    }
 
     @Override
     void print(Node root, int n, boolean p) {

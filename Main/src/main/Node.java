@@ -30,6 +30,10 @@ class Node {
         return false;
     }  // BooleanLit
     
+    public boolean booleanVal() {
+        return false;
+    }
+    
     public boolean isProcedure() {
         return false;
     } // Closure
@@ -85,7 +89,7 @@ class Node {
         return null;
     }
 
-    public Node eval() {
+    public Node eval(Environment env) {
         return null;
     }
 }

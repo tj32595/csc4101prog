@@ -7,6 +7,11 @@ class BooleanLit extends Node {
     public BooleanLit(boolean b) {
         booleanVal = b;
     }
+    
+    @Override
+    public boolean booleanVal() {
+        return booleanVal;
+    }
 
     @Override
     public boolean isBoolean() {

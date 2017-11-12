@@ -28,6 +28,11 @@ class Closure extends Node {
 	    System.out.print(' ');
 	System.out.println('}');
     }
+    
+    @Override
+    public Node eval(Environment env) {
+        return fun.apply(fun.getCdr().getCdr().getCdr());
+    }
 
     // The method apply() takes the environment out of the closure,
     // adds a new frame for the function call, defines bindings for the
@@ -50,6 +55,6 @@ class Closure extends Node {
             System.err.println("Not enough arguments.");
         }
         
-        return null;
+        return fun.eval(env);
     }
 }

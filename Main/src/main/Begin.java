@@ -5,6 +5,18 @@ class Begin extends Special {
     public Begin() {
         
     }
+    
+    @Override
+    public Node eval(Node function, Environment env) {
+        if (!function.getCar().isNull() && !function.getCdr().getCar().isNull()) {
+            return function.getCdr().eval(env);
+        }
+        else {
+            System.out.println("Not enough arguments.");
+            return function;
+        }
+    }
+        
 
     @Override
     void print(Node root, int n, boolean p) {

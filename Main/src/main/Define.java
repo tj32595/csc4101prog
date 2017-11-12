@@ -1,6 +1,27 @@
 package main;
 
 class Define extends Special {
+    
+    @Override
+    public Node eval(Node function, Environment env) {
+        if (!function.isNull()) {
+            Node exp = function.getCdr();
+            Node key = exp.getCar();
+            Node val = exp.getCdr().getCar();
+            if (key.isSymbol()) {
+                env.define(key, val.eval(env));
+                return new Nil();
+            }
+            else {
+                key = key.getCar();
+                val = new Cons(key.getCdr(), exp.getCdr());
+                exp = new Cons(new Ident("lambda"), val);
+                Closure lambda = new Closure(exp, env);
+                env.define(key, lambda.eval(env));
+            }
+        }
+        return function;
+    }
 
     @Override
     void print(Node root, int n, boolean p) {

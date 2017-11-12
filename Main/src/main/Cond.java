@@ -1,11 +1,29 @@
 package main;
 
-import java.io.*;
-
 class Cond extends Special {
 
-    // TODO: Add any fields needed.
-    // TODO: Add an appropriate constructor.
+    @Override
+    public Node eval(Node function, Environment env) {
+        if (!function.isNull()) {
+            Node exp = function.getCdr();
+            while (!exp.isNull()) {
+                Node car = exp.getCar();
+                Node cdr = exp.getCar().getCdr();
+                if (car.getCar().getName().equals("else")) {
+                    return car.getCdr().getCar().eval(env);
+                }
+                else {
+                    car = car.getCar();
+                    if (car.getCar().eval(env).booleanVal()) {
+                        return cdr.getCar().eval(env);
+                    }
+                    exp = exp.getCdr();
+                }
+            }
+        }
+        return function;
+    }
+
     @Override
     void print(Node root, int n, boolean p) {
         for (int i = 0; i < n; i++) {

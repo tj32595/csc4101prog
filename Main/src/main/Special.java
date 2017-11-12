@@ -8,7 +8,9 @@ abstract class Special {
 
     abstract void print(Node t, int n, boolean p);
     
-    boolean isQuote() {
+    public boolean isQuote() {
         return false;
     }
+    
+    public Node eval(Node function, Environment env) {return null;}
 }

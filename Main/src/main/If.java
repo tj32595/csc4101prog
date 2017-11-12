@@ -1,11 +1,23 @@
 package main;
 
-import java.io.*;
-
 class If extends Special {
+    
+    @Override
+    public Node eval(Node function, Environment env) {
+        Node condition = function.getCdr().getCar();
+        Node exp = function.getCdr().getCdr();
+        Node elseExp = function.getCdr().getCdr().getCdr();
+        if (condition.eval(env).booleanVal()) {
+            exp.eval(env);
+        }
+        else {
+            if (!elseExp.isNull()) {
+                elseExp.eval(env);
+            }
+        }
+        return function;
+    }
 
-    // TODO: Add any fields needed.
-    // TODO: Add an appropriate constructor.
     @Override
     void print(Node root, int n, boolean p) {
         for (int i = 0; i < n; i++) {

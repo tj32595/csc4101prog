@@ -1,6 +1,11 @@
 package main;
 
 class Regular extends Special {
+    
+    @Override
+    public Node eval(Node function, Environment env) {
+        return function.getCar().eval(env);
+    }
 
     @Override
     void print(Node root, int n, boolean p) {

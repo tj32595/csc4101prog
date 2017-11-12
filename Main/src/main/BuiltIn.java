@@ -49,6 +49,11 @@ class BuiltIn extends Node {
         }
         System.out.println('}');
     }
+    
+    @Override
+    public Node eval(Environment env) {
+        return this.apply(this.getCdr());
+    }
 
     @Override
     public Node apply(Node args) {
@@ -109,7 +114,7 @@ class BuiltIn extends Node {
                 case "newline":
                     System.out.println();
                 case "eval":
-                    return arg1.eval();
+                    return arg1;
                 default:
                     if (args != null) {
                         arg2 = args.getCar();
