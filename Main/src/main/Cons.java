@@ -4,7 +4,7 @@ class Cons extends Node {
 
     private Node car;
     private Node cdr;
-    private Special form;
+    private Special form = null;
 
     // parseList() `parses' special forms, constructs an appropriate
     // object of a subclass of Special, and stores a pointer to that
@@ -16,13 +16,8 @@ class Cons extends Node {
     // parsing up to the interpreter.
     void parseList() {
         if (car.isSymbol()) {
-            Ident id = (Ident) car;
-            String idName = id.getName();
-
+            String idName = car.getName();
             switch (idName) {
-                case "quote":
-                    form = new Regular();
-                    break;
                 case "'":
                     form = new Quote();
                     break;
@@ -35,7 +30,7 @@ class Cons extends Node {
                 case "if":
                     form = new If();
                     break;
-                case "let":
+                case "'let":
                     form = new Let();
                     break;
                 case "cond":
@@ -44,7 +39,7 @@ class Cons extends Node {
                 case "define":
                     form = new Define();
                     break;
-                case "set!":
+                case "set":
                     form = new Set();
                     break;
                 default:
@@ -55,7 +50,6 @@ class Cons extends Node {
             form = new Regular();
         }
     }
-    // TODO: Add any helper functions for parseList as appropriate.
 
     public Cons(Node a, Node d) {
         car = a;
@@ -118,12 +112,6 @@ class Cons extends Node {
 
     @Override
     public Node eval(Environment env) {
-        Node function = form.eval(this, env);
-        Node cdr = this.getCdr();
-        if (cdr.isNull()) {
-            return function;
-        }
-        return cdr.eval(env);
+        return form.eval(this, env);
     }
-
 }

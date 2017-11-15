@@ -7,6 +7,11 @@ class StrLit extends Node {
     public StrLit(String s) {
         strVal = s;
     }
+    
+    @Override
+    public Node eval(Environment env) {
+        return this;
+    }
 
     @Override
     public boolean isString() {

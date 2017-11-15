@@ -9,6 +9,11 @@ class Nil extends Node {
     public boolean isNull() {
         return true;
     }
+    
+    @Override
+    public Node eval(Environment env) {
+        return this;
+    }
 
     @Override
     public void print(int n) {

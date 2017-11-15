@@ -58,7 +58,8 @@ class Parser {
             case Token.TRUE:
                 return boolTrue;
             case Token.QUOTE:
-                return new Cons(new Ident("'"), parseExp());
+                Node exp = parseExp();
+                return new Cons(new Ident("'"), exp);
             case Token.INT:
                 return new IntLit(tkn.getIntVal());
             case Token.STRING:
@@ -78,7 +79,8 @@ class Parser {
             case Token.TRUE:
                 return boolTrue;
             case Token.QUOTE:
-                return new Cons(new Ident("'"), parseExp());
+                Node exp = parseExp();
+                return new Cons(new Ident("'"), exp);
             case Token.INT:
                 return new IntLit(tkn.getIntVal());
             case Token.STRING:
@@ -101,7 +103,9 @@ class Parser {
             if (nextTkn.getType() == Token.RPAREN) {
                 return new Cons(exp, nil);
             } else {
-                return new Cons(exp, new Cons(nextExp, parseRest()));
+                Node rest = parseRest();
+                Node cons = new Cons(nextExp, rest);
+                return new Cons(exp, cons);
             }
         }
     }

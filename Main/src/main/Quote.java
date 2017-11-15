@@ -8,7 +8,7 @@ class Quote extends Special {
     
     @Override
     public Node eval(Node function, Environment env) {
-        return function.getCar().getCdr();
+        return function.getCdr();
     }
 
     @Override

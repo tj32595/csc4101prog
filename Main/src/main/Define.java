@@ -9,18 +9,17 @@ class Define extends Special {
             Node key = exp.getCar();
             Node val = exp.getCdr().getCar();
             if (key.isSymbol()) {
-                env.define(key, val.eval(env));
-                return new Nil();
+                env.define(key, val);
             }
             else {
-                key = key.getCar();
-                val = new Cons(key.getCdr(), exp.getCdr());
-                exp = new Cons(new Ident("lambda"), val);
-                Closure lambda = new Closure(exp, env);
-                env.define(key, lambda.eval(env));
+                // Create closure
+                Node newExp = new Cons(key.getCdr(), exp.getCdr());
+                newExp = new Cons(new Ident("lambda"), newExp);
+                Closure lambda = new Closure(newExp, env);
+                env.define(key.getCar(), lambda);
             }
         }
-        return function;
+        return new Nil();
     }
 
     @Override

@@ -23,38 +23,34 @@ class Closure extends Node {
 	for (int i = 0; i < n; i++)
 	    System.out.print(' ');
 	System.out.println("#{Procedure");
-	fun.print(n + 4);
+	fun.print(0);
+        System.out.println();
 	for (int i = 0; i < n; i++)
 	    System.out.print(' ');
 	System.out.println('}');
     }
     
-    @Override
-    public Node eval(Environment env) {
-        return fun.apply(fun.getCdr().getCdr().getCdr());
-    }
-
     // The method apply() takes the environment out of the closure,
     // adds a new frame for the function call, defines bindings for the
     // parameters with the argument values in the new frame, and evaluates
     // the function body.
     @Override
     public Node apply (Node args) {
-	env = new Environment(env);
-        Node function = fun.getCdr().getCar();
+        Environment newEnv = new Environment(env);
+        Node params = fun.getCdr().getCar();
         while (args != null) {
-            if (function == null) {
+            if (params == null) {
                 System.err.println("Too many arguments.");
                 break;
             }
-            env.define(function.getCar(), args.getCar());
-            function = function.getCdr();
+            newEnv.define(params.getCar(), args.getCar());
+            params = params.getCdr();
             args = args.getCdr();
         }
-        if (function != null) {
+        if (params != null) {
             System.err.println("Not enough arguments.");
         }
-        
-        return fun.eval(env);
+        Node function = fun.getCdr().getCdr().getCar().eval(newEnv);
+        return function;
     }
 }

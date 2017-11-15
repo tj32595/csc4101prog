@@ -10,8 +10,8 @@ class Set extends Special {
     public Node eval(Node function, Environment env) {
         Node arg1 = function.getCdr().getCar();
         Node arg2 = function.getCdr().getCdr().getCar();
-        env.assign(arg1, arg2.eval(env));
-        return function;
+        env.define(arg1, arg2);
+        return new Nil();
     }
 
     @Override

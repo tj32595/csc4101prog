@@ -1,21 +1,21 @@
 package main;
 
 class If extends Special {
-    
+
     @Override
     public Node eval(Node function, Environment env) {
         Node condition = function.getCdr().getCar();
         Node exp = function.getCdr().getCdr();
-        Node elseExp = function.getCdr().getCdr().getCdr();
-        if (condition.eval(env).booleanVal()) {
-            exp.eval(env);
-        }
-        else {
-            if (!elseExp.isNull()) {
-                elseExp.eval(env);
+                Node elseExp = function.getCdr().getCdr().getCdr();
+        boolean test = condition.eval(env).booleanVal();
+        if (test) {
+            return exp.eval(env);
+        } else {
+            if  (!elseExp.isNull()){
+                return elseExp.eval(env);
             }
         }
-        return function;
+        return new Nil();
     }
 
     @Override

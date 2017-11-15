@@ -32,7 +32,7 @@ class BuiltIn extends Node {
     }
 
     @Override
-    public boolean isProcedure() {
+    public boolean isBuiltIn() {
         return true;
     }
 
@@ -42,12 +42,13 @@ class BuiltIn extends Node {
         for (int i = 0; i < n; i++) {
             System.out.print(' ');
         }
-        System.out.println("#{Built-in Procedure");
-        symbol.print(n + 4);
+        System.out.print(" #{Built-in Procedure ");
+        symbol.print(0);
         for (int i = 0; i < n; i++) {
             System.out.print(' ');
         }
-        System.out.println('}');
+        System.out.print('}');
+        System.out.println();
     }
     
     @Override
@@ -113,6 +114,7 @@ class BuiltIn extends Node {
                     }
                 case "newline":
                     System.out.println();
+                    break;
                 case "eval":
                     return arg1;
                 default:

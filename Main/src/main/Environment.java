@@ -35,6 +35,7 @@ class Environment extends Node {
     // Instead of Nil(), we use null to terminate the list.
     private Node scope;		// the innermost scope, an association list
     private Environment env;	// the enclosing environment
+    private String envName;
 
     public Environment() {
         scope = new Nil();
@@ -46,9 +47,13 @@ class Environment extends Node {
         env = e;
     }
     
+    public void setName(String name) {
+        envName = name;
+    }
+
     @Override
     public String getName() {
-        return "interaction-environment";
+        return envName;
     }
 
     @Override
@@ -57,10 +62,11 @@ class Environment extends Node {
         for (int i = 0; i < n; i++) {
             System.out.print(' ');
         }
-        System.out.println("#{Environment");
-        scope.print(n + 4);
+        System.out.print(envName);
+        System.out.println("\n#{Environment");
+        scope.print(0);
         if (env != null) {
-            env.print(n + 4);
+            env.print(0);
         }
         for (int i = 0; i < n; i++) {
             System.out.print(' ');
@@ -85,6 +91,11 @@ class Environment extends Node {
     }
 
     public Node lookup(Node id) {
+        if (!id.isNull()) {
+            if (id.isNumber() || id.isString() || id.isBoolean()) {
+                return id;
+            }
+        }
         Node val = find(id, scope);
         if (val == null && env == null) {
             System.out.println("undefined variable");
@@ -103,7 +114,7 @@ class Environment extends Node {
         if (oldVal != null) {
             oldVal.setCar(val);
         } else {
-            scope = new Cons(new Cons(id, new Cons(val, null)), scope);
+            scope = new Cons(new Cons(id, new Cons(val, new Nil())), scope);
         }
     }
 

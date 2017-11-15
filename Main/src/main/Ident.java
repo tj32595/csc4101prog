@@ -9,6 +9,11 @@ class Ident extends Node {
     }
 
     @Override
+    public Node eval(Environment env) {
+        return this;
+    }
+
+    @Override
     public boolean isSymbol() {
         return true;
     }
@@ -21,7 +26,8 @@ class Ident extends Node {
 
         System.out.print(name);
     }
-    
+
+    @Override
     public String getName() {
         return name;
     }

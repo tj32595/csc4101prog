@@ -4,24 +4,21 @@ class Cond extends Special {
 
     @Override
     public Node eval(Node function, Environment env) {
-        if (!function.isNull()) {
-            Node exp = function.getCdr();
-            while (!exp.isNull()) {
-                Node car = exp.getCar();
-                Node cdr = exp.getCar().getCdr();
-                if (car.getCar().getName().equals("else")) {
-                    return car.getCdr().getCar().eval(env);
+        Node exp = function.getCdr();
+        while (!exp.isNull()) {
+            Node car = exp.getCar();
+            Node cdr = exp.getCar().getCdr();
+            if (car.getCar().getName().equals("else")) {
+                return car.getCdr().getCar().eval(env);
+            } else {
+                car = car.getCar();
+                if (car.eval(env).booleanVal()) {
+                    return cdr.getCar().eval(env);
                 }
-                else {
-                    car = car.getCar();
-                    if (car.getCar().eval(env).booleanVal()) {
-                        return cdr.getCar().eval(env);
-                    }
-                    exp = exp.getCdr();
-                }
+                exp = exp.getCdr();
             }
         }
-        return function;
+        return new Nil();
     }
 
     @Override

@@ -12,5 +12,9 @@ abstract class Special {
         return false;
     }
     
+    public boolean isSpecial() {
+        return true;
+    }
+    
     public Node eval(Node function, Environment env) {return null;}
 }

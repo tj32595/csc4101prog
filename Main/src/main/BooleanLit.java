@@ -9,6 +9,11 @@ class BooleanLit extends Node {
     }
     
     @Override
+    public Node eval(Environment env) {
+        return this;
+    }
+    
+    @Override
     public boolean booleanVal() {
         return booleanVal;
     }

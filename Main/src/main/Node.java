@@ -34,6 +34,10 @@ class Node {
         return false;
     }
     
+    public boolean isBuiltIn() {
+        return false;
+    }
+    
     public boolean isProcedure() {
         return false;
     } // Closure
